@@ -215,9 +215,9 @@ window.addEventListener("DOMContentLoaded", () => {
 
   clearItem(menuField);
 
-  fitnesMenuItem.render(menuField);
-  premiumMenuItem.render(menuField);
-  postMenuItem.render(menuField);
+   fitnesMenuItem.render(menuField);
+   premiumMenuItem.render(menuField);
+   postMenuItem.render(menuField);
 
   // Forms
 
