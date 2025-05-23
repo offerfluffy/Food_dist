@@ -284,4 +284,60 @@ window.addEventListener("DOMContentLoaded", () => {
       hideModal();
     }, 4000);
   }
+
+  // Slider
+  const slider = document.querySelector(".offer__slider-counter");
+  const sliderPrevious = slider.querySelector(".offer__slider-prev");
+  const sliderNext = slider.querySelector(".offer__slider-next");
+  const sliderCurrent = slider.querySelector("#current");
+  const sliderTotal = slider.querySelector("#total");
+  const sliderImage = document.querySelector(".offer__slide img");
+
+  const sliderImages = [
+    "img/slider/pepper.jpg",
+    "img/slider/food-12.jpg",
+    "img/slider/olive-oil.jpg",
+    "img/slider/paprika.jpg",
+  ];
+
+  let sliderCounter = 0;
+  const sliderMaxCounter = sliderImages.length - 1;
+
+  sliderTotal.textContent = getZero(sliderMaxCounter + 1);
+  renderSlider();
+
+  sliderNext.addEventListener("click", () => {
+    sliderCounter = incrementCounter(sliderCounter, sliderMaxCounter);
+    renderSlider();
+  });
+
+  sliderPrevious.addEventListener("click", () => {
+    sliderCounter = decrementCounter(sliderCounter, sliderMaxCounter);
+    renderSlider();
+  });
+
+  function incrementCounter(counter, maxCount) {
+    if (counter < maxCount) {
+      return ++counter;
+    } else {
+      return 0;
+    }
+  }
+
+  function decrementCounter(counter, maxCount) {
+    if (counter > 0) {
+      return --counter;
+    } else {
+      return maxCount;
+    }
+  }
+
+  function renderSlider() {
+    sliderCurrent.textContent = getZero(sliderCounter + 1);
+    updateImageSrc(sliderImages[sliderCounter], sliderImage);
+  }
+
+  function updateImageSrc(url, img) {
+    img.setAttribute("src", url);
+  }
 });
