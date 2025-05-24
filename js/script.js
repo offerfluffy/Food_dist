@@ -288,6 +288,7 @@ window.addEventListener("DOMContentLoaded", () => {
   // Slider
 
   const slides = document.querySelectorAll(".offer__slide"),
+    slider = document.querySelector(".offer__slider"),
     slidesWrapper = document.querySelector(".offer__slider-wrapper"),
     slidesFiled = document.querySelector(".offer__slider-inner"),
     sliderPrevious = document.querySelector(".offer__slider-prev"),
@@ -298,6 +299,45 @@ window.addEventListener("DOMContentLoaded", () => {
 
   let slideIndex = 1;
   let offset = 0;
+
+  // Slider Indicators
+
+  slider.style.position = "relative";
+
+  const indicators = document.createElement("ol"),
+    dots = [];
+  indicators.classList.add("carousel-indicators");
+  slider.append(indicators);
+
+  for (let i = 0, l = slides.length; i < l; i++) {
+    const dot = document.createElement("li");
+    dot.setAttribute("data-slide-to", i + 1);
+    dot.classList.add("dot");
+
+    if (i === 0) {
+      dot.classList.add("dot_active");
+    }
+
+    dots.push(dot);
+    indicators.append(dot);
+  }
+
+  // e.tagret refers to what was clicked (Event Delegation)
+  // this refers to element on which was set EventListener (Event Handling)
+  indicators.addEventListener("click", function (e) {
+    if (e.target.classList.contains("dot")) {
+      const slideTo = e.target.getAttribute("data-slide-to");
+
+      slideIndex = slideTo;
+      offset = widthValue() * (slideTo - 1);
+
+      slidesFiled.style.transform = `translateX(-${offset}px)`;
+      sliderCurrent.textContent = getZero(slideIndex);
+      setActiveDot();
+    }
+  });
+
+  // Slider Slides
 
   sliderTotal.textContent = getZero(slides.length);
   sliderCurrent.textContent = getZero(slideIndex);
@@ -327,6 +367,8 @@ window.addEventListener("DOMContentLoaded", () => {
       slideIndex++;
     }
 
+    setActiveDot();
+
     sliderCurrent.textContent = getZero(slideIndex);
     slidesFiled.style.transform = `translateX(-${offset}px)`;
   });
@@ -344,9 +386,18 @@ window.addEventListener("DOMContentLoaded", () => {
       slideIndex--;
     }
 
+    setActiveDot();
+
     sliderCurrent.textContent = getZero(slideIndex);
     slidesFiled.style.transform = `translateX(-${offset}px)`;
   });
+
+  function setActiveDot() {
+    dots.forEach((dot) => {
+      dot.classList.remove("dot_active");
+    });
+    dots[slideIndex - 1].classList.add("dot_active");
+  }
 
   function widthValue() {
     return +width.slice(0, width.length - 2);
