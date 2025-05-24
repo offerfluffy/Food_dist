@@ -326,14 +326,12 @@ window.addEventListener("DOMContentLoaded", () => {
   // this refers to element on which was set EventListener (Event Handling)
   indicators.addEventListener("click", function (e) {
     if (e.target.classList.contains("dot")) {
-      const slideTo = e.target.getAttribute("data-slide-to");
+      const slideTo = e.target.getAttribute("data-slide-to"); // string
 
-      slideIndex = slideTo;
+      slideIndex = +slideTo;
       offset = widthValue() * (slideTo - 1);
 
-      slidesFiled.style.transform = `translateX(-${offset}px)`;
-      sliderCurrent.textContent = getZero(slideIndex);
-      setActiveDot();
+      updateSlider();
     }
   });
 
@@ -367,10 +365,7 @@ window.addEventListener("DOMContentLoaded", () => {
       slideIndex++;
     }
 
-    setActiveDot();
-
-    sliderCurrent.textContent = getZero(slideIndex);
-    slidesFiled.style.transform = `translateX(-${offset}px)`;
+    updateSlider();
   });
 
   sliderPrevious.addEventListener("click", () => {
@@ -380,17 +375,20 @@ window.addEventListener("DOMContentLoaded", () => {
       offset -= widthValue();
     }
 
-    if (slideIndex === 0) {
+    if (slideIndex === 1) {
       slideIndex = slides.length;
     } else {
       slideIndex--;
     }
 
-    setActiveDot();
+    updateSlider();
+  });
 
+  function updateSlider() {
+    setActiveDot();
     sliderCurrent.textContent = getZero(slideIndex);
     slidesFiled.style.transform = `translateX(-${offset}px)`;
-  });
+  }
 
   function setActiveDot() {
     dots.forEach((dot) => {
@@ -400,7 +398,7 @@ window.addEventListener("DOMContentLoaded", () => {
   }
 
   function widthValue() {
-    return +width.slice(0, width.length - 2);
+    return +width.replace(/\D/g, ""); //+width.slice(0, width.length - 2);
   }
 
   // // Slider Image Change
