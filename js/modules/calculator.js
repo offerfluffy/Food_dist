@@ -112,4 +112,4 @@ function calculator() {
   calcTotal();
 }
 
-module.exports = calculator;
+export default calculator;

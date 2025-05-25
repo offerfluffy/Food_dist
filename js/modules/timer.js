@@ -1,3 +1,5 @@
+import { getZero } from "../services/services";
+
 function timer() {
   const deadLine = "2025-07-20";
 
@@ -24,14 +26,6 @@ function timer() {
       minutes,
       seconds,
     };
-  }
-
-  function getZero(num) {
-    if (num >= 0 && num < 10) {
-      return `0${num}`;
-    } else {
-      return num;
-    }
   }
 
   function setClock(selector, endtime) {
@@ -61,4 +55,4 @@ function timer() {
   setClock(".timer", deadLine);
 }
 
-module.exports = timer;
+export default timer;

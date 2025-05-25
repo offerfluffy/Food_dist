@@ -1,3 +1,5 @@
+import { getResource } from "../services/services";
+
 function menu() {
   const menuField = document.querySelector(".menu__field .container");
 
@@ -33,16 +35,6 @@ function menu() {
     }
   }
 
-  const getResource = async (url) => {
-    const res = await fetch(url);
-
-    if (!res.ok) {
-      throw new Error(`${url}: ${res.status} ${res.statusText}`);
-    }
-
-    return await res.json();
-  };
-
   clearItem(menuField);
 
   getResource("http://localhost:3000/menu").then((data) => {
@@ -52,4 +44,4 @@ function menu() {
   });
 }
 
-module.exports = menu;
+export default menu;
